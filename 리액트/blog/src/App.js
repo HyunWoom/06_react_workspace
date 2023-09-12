@@ -11,6 +11,7 @@ function App() {
   let [따봉, 따봉변경] = useState([0,0,0]);
   let [modal, setModal] = useState(false);
   let [b,c] = useState(0);
+  let [입력값, 입력값변경] = useState('');
 
   return (
     <div className="App">
@@ -52,19 +53,35 @@ function App() {
         글제목.map(function(a, i){ // a : 값 자체 , i : 인덱스    
           return (
             <div className='list'>
-              <h4 onClick={() => { setModal(!modal); c(i); }}>{ 글제목[i] }<span onClick={ () => { 
-                let copy =[...따봉];
-                copy[i] = copy[i] + 1;
-                따봉변경(copy);
-                 } }>👍</span> { 따봉[i] }</h4>
+              <h4 onClick={() => { setModal(!modal); c(i); }}>{ 글제목[i] }
+                <span onClick={ (e) => { 
+                  e.stopPropagation(); // 상위 html로 퍼지는 이벤트 버블링을 막는 코드
+                  let copy =[...따봉];
+                  copy[i] = copy[i] + 1;
+                  따봉변경(copy);
+                  } }>👍
+                </span> { 따봉[i] }
+              </h4>
               <p>9월 11일 발행</p>
+              <button onClick={() => { 
+                let copy = [...글제목];
+                copy.splice(i,1);
+                글제목변경(copy);
+               }}>글 삭제</button>
             </div>
-          )  
-            
+          )           
         })
       }
-      
-      
+      <input onChange={(e) => 
+        {
+          입력값변경(e.target.value);         
+        }}></input>
+        <button onClick={ ()=>{ 
+          let copy = [...글제목];
+          copy.unshift(입력값); 
+          글제목변경(copy);
+         }}>글 추가</button>
+
       {
         // state 가 false면 < Modal> 안보이게 / state 가 true면 <Modal> 보이게
         modal == true ? <Modal 글제목={글제목} 글제목변경={글제목변경} b={b}/> : null 
@@ -84,8 +101,8 @@ function Modal(props){
         <p>상세내용</p>
         <button onClick={()=>{ 
           let copy =[...props.글제목];
+          copy = (['여자 코트 추천', '강남 우동 맛집', '파이썬 독학']);
           props.글제목변경(copy);
-          //props.글제목변경(['여자 코트 추천', '강남 우동 맛집', '파이썬 독학']);
         }}>글수정</button>
       </div>
 
