@@ -2,6 +2,26 @@
   text-align: center;
 }
 
+thead{
+  background-color: rgb(240, 240, 240);
+  color: #282c34  ;
+}
+
+table, td, th {
+  border-collapse: collapse;
+  padding: 10px;
+}
+
+tbody>tr{
+  border-bottom: 1px solid lightgray;
+  height: 30px;
+}
+button{
+  height: 40px;
+  margin: 10px;
+}
+
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

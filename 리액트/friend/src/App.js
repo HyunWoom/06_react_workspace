@@ -1,19 +1,32 @@
 /* eslint-disable */
 
 import './App.css';
-import { useState } from 'react';
-import data from './data.js';
-import { Routes, Route, Link, useNavigate } from 'react-router-dom';
+import { useRef, useState } from 'react';
+import data from  './data.js';
+import { Routes, Route, Link, Navigate, useNavigate } from 'react-router-dom';
+import FriendList from './FriendList';
+import FriendInsert from './FriendInsert';
 
 function App() {
-  let [friend,setfriend] = useState(data);
-  let info = {
-    id: 0,
-    name: "",
-    hobby: "",
-    birthday: ""
-  };
-  const navigate = useNavigate();
+
+  const [FriendItem, setFriendItem] = useState(data);
+
+  const dataId = useRef(4);
+
+  const onCreate = (insertFriend) => {
+    insertFriend.id = dataId.current;
+    dataId.current += 1;
+    setFriendItem([...FriendItem, insertFriend]);
+    Navigate('/');
+  }
+
+  const Navigate = useNavigate();
+
+  const onDelete = (targetId) => {
+    console.log(`${targetId}가 삭제되었습니다.`);
+    const newfriend = FriendItem.filter((it) => it.id !== targetId);
+    setFriendItem(newfriend);
+  }
 
     return (
       <div className="App">
@@ -22,55 +35,11 @@ function App() {
         <Link to="/">메인으로 가기</Link>
         <Routes>
           <Route path="/" element={
-            <>
-            <table align='center'>
-          <thead>
-            <tr>
-              <th width="100px">번호</th>
-              <th width="100px">이름</th>
-              <th width="100px">취미</th>
-              <th width="100px">생일</th>
-              <th width="100px">기타</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              friend.map(function(a,i){
-                return(
-                  <Friend friend={friend} setfriend={setfriend} i={i}></Friend>
-                )
-              })
-            }
-          </tbody>
-        </table>
-            </>
+            <FriendList FriendList={FriendItem} onDelete={onDelete}/>
           }>
           </Route>
           <Route path="/insert" element={
-            <>
-            <div>
-                친구추가 <br></br>
-                번호 : <input onChange={(e)=>{
-                  info.id = e.target.value;
-                }}/> <br></br>
-                이름 : <input onChange={(e)=>{
-                  info.name = e.target.value;
-                }} /> <br></br>
-                취미 : <input onChange={(e)=>{
-                  info.hobby = e.target.value;
-                }}/> <br></br>
-                생일 : <input onChange={(e)=>{
-                  info.birthday = e.target.value;
-                }} type='date'>
-              </input> <br></br>
-              <button onClick={()=>{
-                let copy = [...friend];
-                copy.push(info);
-                setfriend(copy);
-                navigate('/');
-              }}>추가</button>
-            </div>
-            </>
+            <FriendInsert onCreate={onCreate}/>
           }>
           </Route>
         </Routes>
@@ -79,19 +48,4 @@ function App() {
 };
 
 
-function Friend(props){
-  return(
-    <tr>
-      <td>{props.friend[props.i].id}</td>
-      <td>{props.friend[props.i].name}</td>
-      <td>{props.friend[props.i].hobby}</td>
-      <td>{props.friend[props.i].birthday}</td>
-      <td><button onClick={()=>{
-        let copy = [...props.friend];
-        copy.splice(props.i,1);
-        props.setfriend(copy);
-      }}>삭제</button></td>
-    </tr>
-  )
-}
 export default App;
