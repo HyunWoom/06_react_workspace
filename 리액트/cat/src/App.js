@@ -7,11 +7,14 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import {Container, Row, Col} from 'react-bootstrap';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import data from './data.js';
+import { Link, useNavigate} from "react-router-dom";
+import CatList from './catList';
+import CatInsert from './CatInsert';
 
+  
   function CustomTabPanel(props) {
-
     const { children, value, index, ...other } = props;
   
     return (
@@ -47,11 +50,33 @@ import data from './data.js';
   export default function BasicTabs() {
     let [cat,setcat] = useState(data);
     let [따봉, 따봉변경] = useState([0,0,0,0,0]);
-    let [mo,setmo] = useState(0);
-    let [modal, setModal] = useState(false);
+    const [value, setValue] = useState(0);
 
-    const [value, setValue] = React.useState(0);
-    
+    const [CatItem, setCatItem] = useState(data);
+
+    const dataId = useRef(6);
+
+    const onCreate = (insertCat) => {
+      insertCat.id = dataId.current;
+      dataId.current += 1;
+      setCatItem([insertCat, ...CatItem]);
+      Navigate('/');
+    }
+
+    const Navigate = useNavigate();
+
+    const onRemove = (targetId) => {
+      console.log(`${targetId}(묘)가 삭제되었습니다.`);
+      const newCat = data.filter((it) => it.id !== targetId);
+      setCatItem(newCat);
+    }
+
+    const onEdit = (targetId, newContent) => {
+      setCatItem(
+        data.map((it)=>( it.id === targetId ? {...it, content:newContent} : it ))
+    )
+  }
+
     const handleChange = (event, newValue) => {
       setValue(newValue);
     };
@@ -77,20 +102,19 @@ import data from './data.js';
                 {
                   cat.map(function(a,i){
                     return(
-                      <Cat cat={cat} setcat={setcat} i={i} 따봉={따봉} 따봉변경={따봉변경} mo={mo} setmo={setmo} modal={modal} setModal={setModal}></Cat>
-                      
-                    )
-                  })
-                }
+                      <Cat cat={cat} setcat={setcat} i={i} 따봉={따봉} 따봉변경={따봉변경}></Cat>
+                      )
+                    })
+                  }
               </Row>
             </Container>
           </div>
           </CustomTabPanel>
           <CustomTabPanel value={value} index={1}>
-            Item Two
+          <CatInsert onCreate={onCreate}/>
           </CustomTabPanel>
           <CustomTabPanel value={value} index={2}>
-            Item Three
+          <CatList catList={data} onRemove={onRemove} onEdit={onEdit}/>
           </CustomTabPanel>
       </div>
     </Box>
@@ -103,38 +127,42 @@ import data from './data.js';
   return(
     <Col sm>
       <h3>{props.cat[props.i].title}</h3>
-      <img src={"먼치킨" + [props.i + 1 ] + ".jpg"} width="100%" height="100%" onClick={()=>{ props.setModal(!props.modal); props.setmo(i); }}></img>
-      <p>{props.cat[props.i].price}원</p>
+      <Link to="/detail/:id">
+      <img src={"먼치킨" + [props.i + 1 ] + ".jpg"} width="100%" height="100%" ></img>
+      </Link> <br/><br/>
+      <p>{props.cat[props.i].content}</p> 
+      <p>{props.cat[props.i].area}</p> 
+      <p>{props.cat[props.i].age}개월</p>
       <span onClick={ (e) => { 
         let copy =[...props.따봉];
         copy[props.i] = copy[props.i] + 1;
         props.따봉변경(copy);
         } }>👍
       </span> { props.따봉[props.i] }
-      {
-        modal == true ? <Modal mo={mo} setmo={setmo} modal={modal} setModal={setModal} title={title}/> : null 
-      }
+      
     </Col>
   )
 }
+//상세페이지
+// function DetailPage(props){
 
-function Modal(props){
-  return(
-    <>
-      <div className='modal'>
-        <h4>{props.cat[props.mo]}</h4>
-        <p>날짜</p>
-        <p>상세내용</p>
-        <button onClick={()=>{ 
-          let copy =[...props.title];
-          copy = ([props.title]);
-          props.글제목변경(copy);
-        }}>글수정</button>
-      </div>
+//   let {id} = useParams();
 
-    </>
-  )
-}
-
+//   return(
+//     <div className="container">
+//       <div className="row">
+//         <div className="col-md-6">
+//           <img src={"먼치킨" + [props.i + 1 ] + `/${id}.jpg`} width="100%" />
+//         </div>
+//         <div className="col-md-6">
+//           <h4 className="pt-5">{props.cat[id].props.title}</h4>
+//           <p>{props.cat[id].props.content}</p>
+//           <p>{props.cat[id].props.price}</p>
+//           <button className="btn btn-danger">분양받기</button> 
+//         </div>
+//       </div>
+//     </div> 
+// )
+//}
 
 
