@@ -1,0 +1,26 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Black+And+White+Picture&family=Dokdo&family=Gasoek+One&family=Yeon+Sung&display=swap');
+
+.App {
+
+  text-align: center;
+  font-family: 'Yeon Sung', cursive;
+}
+
+.main-bg{
+
+  height: 650px;
+  background-image: url('./img/catmain5.jpg');
+  background-size: cover;
+  background-position: center;
+  align:center;
+  
+}
+.main-content{
+  margin-top: 50px;
+  height: 500px;
+  font-family: 'Yeon Sung', cursive;
+  background-position: center;
+}
+
+
