@@ -1,15 +1,18 @@
 import { useRef, useState } from "react";
 
-const CatInsert = ({onCreate}) => {
+const CatInsert = ({onCreate, CatItem}) => {
 
     const titleInput = useRef();
     const contentInput = useRef();
 
     const [state, setState] = useState({
+        id:6,
         title : "",
         content : "",
-        area : "",
-        age : 1
+        area : "서울",
+        age : 1,
+        created_date:new Date().toLocaleString(),
+        img : ""
     });
 
     const handleChangeState = (e) => {
@@ -34,13 +37,14 @@ const CatInsert = ({onCreate}) => {
             return;
         }
 
-        onCreate(state.title, state.content, state.area, state.age);
+        onCreate(state);
         alert("저장성공 >_<");
         setState({
             title:"",
             content:"",
             area:"",
             age:1,
+            img:""
         })
     }
 
@@ -49,13 +53,16 @@ const CatInsert = ({onCreate}) => {
         <div className="CatInsert">
             <h2>분양시킬 고양이</h2>
             <div>
+                <img src="인설트.png" className="imginsert"></img>
+            </div><br/>
+            <div>
                 <input 
                     ref={titleInput}
                     name="title"
                     value={state.title} 
                     onChange={handleChangeState}
                 />
-            </div>
+            </div><br/>
             <div>
                 <textarea
                     ref={contentInput}
@@ -63,22 +70,22 @@ const CatInsert = ({onCreate}) => {
                     value={state.content}
                     onChange={handleChangeState}
                 />
-            </div>
+            </div><br/>
             <div>
                 사는 지역 : 
                 <select 
                 name="area" 
                 value={state.area} 
                 onChange={handleChangeState}>
-                    <option value={1}>서울</option>
-                    <option value={2}>경기도</option>
-                    <option value={3}>대구</option>
-                    <option value={4}>부산</option>
-                    <option value={5}>전주</option>
-                    <option value={6}>광주</option>
-                    <option value={6}>인천</option>
+                    <option value={"서울"}>서울</option>
+                    <option value={"경기도"}>경기도</option>
+                    <option value={"대구"}>대구</option>
+                    <option value={"부산"}>부산</option>
+                    <option value={"전주"}>전주</option>
+                    <option value={"광주"}>광주</option>
+                    <option value={"인천"}>인천</option>
                 </select>
-            </div>
+            </div><br/>
             <div>
                 고양이의 개월 수 : 
                 <select 
@@ -93,9 +100,12 @@ const CatInsert = ({onCreate}) => {
                     <option value={6}>6개월</option>
                     <option value={6}>기타</option>
                 </select>
-            </div>
+            </div><br/>
             <div>
-                <button onClick={handleSubmit}>분양시킬 고양이 저장되었어요. ^_^</button>
+                <input name="img" value={state.img} onChange={handleChangeState}></input>
+            </div><br/>
+            <div>
+                <button onClick={handleSubmit} style={{height:"100px"}}>분양시킬 고양이 저장되었어요. ^_^</button>
             </div>
         </div>
     )

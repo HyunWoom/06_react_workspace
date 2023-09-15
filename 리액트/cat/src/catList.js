@@ -11,21 +11,22 @@ const catList = ({ onRemove, catList, onEdit}) => {
                     <tr>
                     <th width="100px">번호</th>
                     <th width="100px">고양이 이름</th>
-                    <th width="100px">성격</th>
+                    <th width="100px">이미지</th>
                     <th width="100px">지역</th>
                     <th width="100px">나이</th>
-                    <th width="100px">분양일</th>
+                    <th width="100px">등록일</th>
                     </tr>
                 </thead>
                 <tbody>
                     {
                     catList.map(function(it){
                         return(
-                        <CatItem key={it.id} {...it} onRemove={onRemove} onEdit={onEdit} />
+                        <CatItem key={it.id} {...it} onRemove={onRemove} onEdit={onEdit} catList={catList}  />
                         )
                     })
                     }
                     
+                   
                 </tbody>
             </table>
             

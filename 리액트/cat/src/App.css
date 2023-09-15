@@ -13,9 +13,23 @@
   background-image: url('./img/catmain5.jpg');
   background-size: cover;
   background-position: center;
-  align:center;
-  
 }
+thead{
+  background-color: rgb(240, 240, 240);
+  color: #282c34  ;
+
+}
+
+table, td, th {
+  border-collapse: collapse;
+  padding: 10px;
+}
+
+tbody>tr{
+  border-bottom: 1px solid lightgray;
+  height: 30px;
+}
+
 .main-content{
   margin-top: 50px;
   height: 500px;
@@ -23,4 +37,36 @@
   background-position: center;
 }
 
+.date{
+  width: 100px; 
+}
+.content{
+  width: 200px;
+}
+.imgitem>img{
+  height: 150px;
+  width: 150px;
+  border-radius: 100px;
+}
+.buttonitem{
+  margin-top: 50px;
+  height: 50px;
+  width: 100px;
+}
 
+.imginsert{
+  border-radius: 150px;
+  width: 300px;
+}
+
+button{
+  border-radius: 150px;
+}
+
+.imgdetail{
+  border-radius: 180px;
+}
+
+.imgcat{
+  border-radius: 180px;
+}
