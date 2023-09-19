@@ -3,7 +3,7 @@ import { useState, useRef } from "react";
 const DiaryItem = ({ author, content, created_date, emotion, id, onRemove, onEdit }) => {
 
     const [isEdit, setIsEdit] = useState(false);
-    const toggleIsEdit = () => { setIsEdit(!isEdit) }
+    const toggleIsEdit = () =>  { setIsEdit(!isEdit) }
 
     const [localContent, setLocalContent] = useState(content);
 

@@ -76,8 +76,8 @@ function App() {
       }>
       </Route>
       <Route path="/insert" element={<CatInsert onCreate={onCreate} CatItem={CatItem} />}></Route>
-      <Route path="/list" element={<CatList catList={CatItem} onRemove={onRemove} onEdit={onEdit}/>}></Route>
-      <Route path="/detail/:id" element={<CatDetail  CatItem={CatItem}/>}></Route>
+      <Route path="/list" element={<CatList catList={CatItem} onRemove={onRemove}/>}></Route>
+      <Route path="/detail/:id" element={<CatDetail  CatItem={CatItem} onRemove={onRemove}  onEdit={onEdit}/>}></Route>
     </Routes>
 </>
     </div>
@@ -106,27 +106,4 @@ function App() {
 }
 export default App;
 
-
- 
-//상세페이지
-// function DetailPage(props){
-
-//   let {id} = useParams();
-
-//   return(
-//     <div className="container">
-//       <div className="row">
-//         <div className="col-md-6">
-//           <img src={"먼치킨" + [props.i + 1 ] + `/${id}.jpg`} width="100%" />
-//         </div>
-//         <div className="col-md-6">
-//           <h4 className="pt-5">{props.cat[id].props.title}</h4>
-//           <p>{props.cat[id].props.content}</p>
-//           <p>{props.cat[id].props.price}</p>
-//           <button className="btn btn-danger">분양받기</button> 
-//         </div>
-//       </div>
-//     </div> 
-// )
-//}
 

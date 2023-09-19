@@ -1,6 +1,6 @@
 
 
-const CatItem = ({ title, area, age, created_date, id, onRemove, catList,img }) => {
+const CatItem = ({ title, area, age, created_date, id, onRemove,img }) => {
 
     const handleRemove = () =>{
         if(window.confirm(`${id}번째 고양이를 삭제하시나요 ? `)){
@@ -19,7 +19,7 @@ const CatItem = ({ title, area, age, created_date, id, onRemove, catList,img }) 
             <td>{age}개월</td>
             <td className="date">{created_date}</td>
 
-            <button onClick={handleRemove} className="buttonitem">삭제하기</button>
+            <button onClick={handleRemove} className="buttonitem">분양하기</button>
 
         </tr>
 

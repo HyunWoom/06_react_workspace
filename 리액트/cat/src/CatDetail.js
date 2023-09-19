@@ -1,9 +1,18 @@
-import { Link, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-const CatDetail = (CatItem)=>{ 
+
+const CatDetail = (CatItem, onRemove, onEdit)=>{ 
 
     let id = useParams();
-    console.log(CatItem.CatItem);
+   
+    const handleRemove = () =>{
+        if(window.confirm(`${CatItem.CatItem[id.id].id}번째 고양이가 분양하실건가요 ? `)){
+
+            Navigate('/');
+        }
+    }
+    const Navigate = useNavigate();
+
 
     return(
         <div className="detailmain">   
@@ -19,8 +28,7 @@ const CatDetail = (CatItem)=>{
                 <p>지역 : {CatItem.CatItem[id.id].area}</p><br/>
                 <p>나이 : {CatItem.CatItem[id.id].age}개월</p><br/>
                 <p>등록일 : {CatItem.CatItem[id.id].created_date}</p><br/>
-                <Link to="niga"><button className="btn btn-danger">분양받기</button></Link> <br/><br/>
-                <button className="btn btn-danger" style={{margin:"20px"}}>삭제하기</button> 
+                <button className="btn btn-danger" style={{margin:"20px"}} onClick={handleRemove} >분양받기</button>
                 <button className="btn btn-danger">수정하기</button>  
                 
                 </div>
